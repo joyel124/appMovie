@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Color(0xff1a232f),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
-                        color: Colors.indigo,
+                        color: Color(0xff0f79af),
                         shape: BoxShape.circle,
                       ),
                       child: const CircleAvatar(
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(Radius.circular(20)),
-                            color: Colors.blueGrey.withOpacity(0.7),
+                            color: Color(0xff1a232f).withOpacity(0.7),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
                                 width: 100,
                                 height: 3.2,
                                 decoration: BoxDecoration(
-                                  color: Colors.indigo,
+                                  color: Color(0xff0f79af),
                                   borderRadius:
                                       const BorderRadius.all(Radius.circular(20)),
                                 ),
@@ -167,7 +167,7 @@ class HomePage extends StatelessWidget {
                           margin: const EdgeInsets.all(10),
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.indigo,
+                            color: Color(0xff0f79af),
                             shape: BoxShape.circle,
                           ),
                           child: Text(
