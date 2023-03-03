@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../models/movie_model.dart';
+import '../general/colors.dart';
+
 class ItemMovieWidget extends StatelessWidget {
 
-  Map movieMap;
+  MovieModel movieModel;
 
-  ItemMovieWidget({required this.movieMap});
+  ItemMovieWidget({
+    required this.movieModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class ItemMovieWidget extends StatelessWidget {
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(
-              "https://image.tmdb.org/t/p/original/${movieMap["poster_path"]}"),
+              "https://image.tmdb.org/t/p/original/${movieModel.posterPath}"),
         ),
         boxShadow: [
           BoxShadow(
@@ -39,14 +44,14 @@ class ItemMovieWidget extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                color: Color(0xff1a232f).withOpacity(0.7),
+                color: kBrandPrimaryColor.withOpacity(0.7),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    movieMap["title"],
+                    movieModel.title,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,
@@ -58,14 +63,14 @@ class ItemMovieWidget extends StatelessWidget {
                     width: 100,
                     height: 3.2,
                     decoration: BoxDecoration(
-                      color: Color(0xff0f79af),
+                      color: kBrandSecondaryColor,
                       borderRadius:
                       const BorderRadius.all(Radius.circular(20)),
                     ),
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    movieMap["overview"],
+                    movieModel.overview,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -86,7 +91,7 @@ class ItemMovieWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            movieMap["release_date"],
+                            movieModel.releaseDate.toString().substring(0,10),
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -103,7 +108,7 @@ class ItemMovieWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            movieMap["vote_count"].toString(),
+                            movieModel.voteCount.toString(),
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -127,7 +132,7 @@ class ItemMovieWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Text(
-                movieMap["vote_average"].toString(),
+                movieModel.voteAverage.toString(),
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,

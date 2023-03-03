@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:appmovie/UI/general/colors.dart';
 import 'package:appmovie/UI/widgets/item_movie_widget.dart';
+import 'package:appmovie/models/movie_model.dart';
+import 'package:appmovie/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,31 +14,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List movies = [];
+  List<MovieModel> movies = [];
 
   initState() {
     super.initState();
-    getMovies();
+    getData();
   }
 
-  getMovies() async {
-    String _url =
-        "https://api.themoviedb.org/3/movie/popular?api_key=5b6cf5e2308f7946d22206fb4e945700&language=es-ES&page=2";
-    Uri _uri = Uri.parse(_url);
-    http.Response _response = await http.get(_uri);
-    if(_response.statusCode == 200){
-      Map<String, dynamic> moviesMap = json.decode(_response.body);
-      movies = moviesMap["results"];
+  getData(){
+    APIService _apiService = APIService();
+    _apiService.getMovies().then((value) {
+      movies = value;
       setState((){});
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    getMovies();
 
     return Scaffold(
-      backgroundColor: Color(0xff1a232f),
+      backgroundColor: kBrandPrimaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -69,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
-                        color: Color(0xff0f79af),
+                        color: kBrandSecondaryColor,
                         shape: BoxShape.circle,
                       ),
                       child: const CircleAvatar(
@@ -87,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                   itemCount: movies.length,
                   itemBuilder: (context, index) {
                     return ItemMovieWidget(
-                      movieMap: movies[index],
+                      movieModel: movies[index],
                     );
                   },
                 ),

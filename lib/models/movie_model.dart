@@ -1,20 +1,4 @@
-class Welcome {
-  Welcome({
-    required this.adult,
-    required this.backdropPath,
-    required this.genreIds,
-    required this.id,
-    required this.originalLanguage,
-    required this.originalTitle,
-    required this.overview,
-    required this.popularity,
-    required this.posterPath,
-    required this.releaseDate,
-    required this.title,
-    required this.video,
-    required this.voteAverage,
-    required this.voteCount,
-  });
+class MovieModel {
 
   bool adult;
   String backdropPath;
@@ -31,7 +15,24 @@ class Welcome {
   double voteAverage;
   int voteCount;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  MovieModel({
+    required this.adult,
+    required this.backdropPath,
+    required this.genreIds,
+    required this.id,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
+    required this.releaseDate,
+    required this.title,
+    required this.video,
+    required this.voteAverage,
+    required this.voteCount,
+  });
+
+  factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
     adult: json["adult"],
     backdropPath: json["backdrop_path"],
     genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
