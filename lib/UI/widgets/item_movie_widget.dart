@@ -19,7 +19,7 @@ class ItemMovieWidget extends StatelessWidget {
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(
-              "https://image.tmdb.org/t/p/w500/${movieMap["poster_path"]}"),
+              "https://image.tmdb.org/t/p/original/${movieMap["poster_path"]}"),
         ),
         boxShadow: [
           BoxShadow(
