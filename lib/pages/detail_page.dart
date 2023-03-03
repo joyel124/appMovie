@@ -155,10 +155,6 @@ class DetailPage extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 50,
-                    decoration: BoxDecoration(
-                      color: kBrandSecondaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
                     child: TextButton(
                       onPressed: () {},
                       child: Row(
@@ -181,6 +177,15 @@ class DetailPage extends StatelessWidget {
                           )
                         ],
                       ),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(kBrandSecondaryColor),
+                      )
                     ),
                   ),
                   const SizedBox(
@@ -204,25 +209,32 @@ class DetailPage extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: movieModel.genreIds
-                        .map((e) => Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.8),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: Text(
-                                e.toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: movieModel.genreIds
+                          .map((e) => Container(
+                                margin: const EdgeInsets.only(right: 10),
+                                //width: 60,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.8),
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(10)),
                                 ),
-                              ),
-                            ))
-                        .toList(),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    e.toString(),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -246,25 +258,32 @@ class DetailPage extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: movieModel.genreIds
-                        .map((e) => Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.8),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: Text(
-                                e.toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ))
-                        .toList(),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: movieModel.genreIds
+                          .map((e) => Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        //width: 60,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            e.toString(),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ))
+                          .toList(),
+                    ),
                   ),
                 ],
               ),
