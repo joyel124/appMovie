@@ -1,28 +1,66 @@
 import 'package:appmovie/UI/general/colors.dart';
+import 'package:appmovie/UI/widgets/item_cast_widget.dart';
 import 'package:appmovie/models/movie_model.dart';
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatelessWidget {
-  MovieModel movieModel;
+import '../models/cast_model.dart';
+import '../models/movie_detail_model.dart';
+import '../services/api_service.dart';
+
+class DetailPage extends StatefulWidget {
+  int movieId;
 
   DetailPage({
-    required this.movieModel,
+    required this.movieId,
   });
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  List<CastModel> casts = [];
+  final APIService _apiService = APIService();
+  MovieDetailModel? movieDetailModel;
+  bool isloading = true;
+
+  initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() {
+    _apiService.getCastsByMovie(widget.movieId).then((value) {
+      if (value != null) {
+        casts = value;
+        //isloading = false;
+        setState(() {});
+      }
+    });
+    _apiService.getMovie(widget.movieId).then((value) {
+      if (value != null) {
+        movieDetailModel = value;
+        isloading = false;
+        setState(() {});
+      }
+    });
+    //setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: CustomScrollView(
+      body: !isloading ? CustomScrollView(
         slivers: [
           SliverAppBar(
             expandedHeight: 200,
             backgroundColor: kBrandSecondaryColor,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(movieModel.title),
+              title: Text(movieDetailModel!.title),
               centerTitle: true,
               background: Image.network(
-                'https://image.tmdb.org/t/p/original//${movieModel.backdropPath}',
+                'https://image.tmdb.org/t/p/original//${movieDetailModel!.backdropPath}',
                 fit: BoxFit.cover,
               ),
             ),
@@ -51,7 +89,7 @@ class DetailPage extends StatelessWidget {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                'https://image.tmdb.org/t/p/original/${movieModel.posterPath}'),
+                                'https://image.tmdb.org/t/p/original/${movieDetailModel!.posterPath}'),
                           ),
                         ),
                       ),
@@ -73,7 +111,7 @@ class DetailPage extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                movieModel.releaseDate
+                                movieDetailModel!.releaseDate
                                     .toString()
                                     .substring(0, 10),
                                 style: TextStyle(
@@ -86,7 +124,7 @@ class DetailPage extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              movieModel.title,
+                              movieDetailModel!.title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -106,7 +144,7 @@ class DetailPage extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  movieModel.popularity.toString(),
+                                  movieDetailModel!.popularity.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 13,
@@ -141,7 +179,7 @@ class DetailPage extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    movieModel.overview,
+                    movieDetailModel!.overview,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -156,37 +194,37 @@ class DetailPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.link,
-                            color: Colors.black,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Home Page',
-                            style: TextStyle(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.link,
                               color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
                             ),
-                          )
-                        ],
-                      ),
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Home Page',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
                         ),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(kBrandSecondaryColor),
-                      )
-                    ),
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              kBrandSecondaryColor),
+                        )),
                   ),
                   const SizedBox(
                     height: 20,
@@ -207,25 +245,25 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: movieModel.genreIds
+                      children: movieDetailModel!.genres
                           .map((e) => Container(
                                 margin: const EdgeInsets.only(right: 10),
                                 //width: 60,
                                 height: 30,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.8),
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                 ),
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Text(
-                                    e.toString(),
+                                    e.name,
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
@@ -237,7 +275,7 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   //géneros
                   Text(
@@ -256,41 +294,21 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: movieModel.genreIds
-                          .map((e) => Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        //width: 60,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            e.toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ))
-                          .toList(),
-                    ),
+                      children: casts
+                          .map((e) => ItemCastWidget(castModel: e)).toList(),
+                  ),
                   ),
                 ],
               ),
             ),
           ])),
         ],
-      ),
+      ) : Center(child: CircularProgressIndicator(),),
     );
   }
 }

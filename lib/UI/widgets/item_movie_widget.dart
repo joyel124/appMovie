@@ -17,7 +17,7 @@ class ItemMovieWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(movieModel: movieModel,)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(movieId: movieModel.id,)));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 12),
